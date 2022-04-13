@@ -1,0 +1,65 @@
+<br><br>
+
+<?php echo $this->tag->form("spotify/searchResult"); ?>
+
+    <p>
+        <?php echo $this->tag->textField("song"); ?>
+        <!-- <label for="name">Name</label> -->
+    </p>
+
+    
+    
+        <?= $this->tag->checkField(
+            [
+                'album', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="album">Album</label> &nbsp; &nbsp;
+        
+        <?= $this->tag->checkField(
+            [
+                'artist', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="artist">Artist</label> &nbsp; &nbsp;
+
+        <?= $this->tag->checkField(
+            [
+                'playlist', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="playlist">Playlist</label> &nbsp; &nbsp;
+
+        <?= $this->tag->checkField(
+            [
+                'track', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="track">Track</label> &nbsp; &nbsp;
+
+        <?= $this->tag->checkField(
+            [
+                'show', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="show">Show</label> &nbsp; &nbsp;
+
+        <?= $this->tag->checkField(
+            [
+                'episode', 
+                'value' => 'Y',
+            ]
+        );?>
+        <label for="episode">Episode</label> &nbsp; &nbsp;
+    
+
+    <p>
+        <?php echo $this->tag->submitButton("Search"); ?>
+    </p>
+
+</form>

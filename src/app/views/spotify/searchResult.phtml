@@ -1,0 +1,382 @@
+<?php
+
+$resultCount = 1;
+
+?>
+<ul class="nav nav-pills">
+
+    <?php if (isset($tags['track'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn-success active" href="#tracks"><b>Track</b></a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+    <?php if (isset($tags['artist'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary" href="#artists">Artist</a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+    <?php if (isset($tags['album'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-info" href="#albums">Album</a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+    <?php if (isset($tags['playlist'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-dark" href="#playlists">Playlist</a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+    <?php if (isset($tags['show'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-info" href="#shows">Show</a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+    <?php if (isset($tags['episode'])) { ?>
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-info" href="#episodes">Episode</a>
+        </li>
+    <?php } ?>
+    &nbsp;
+
+</ul>
+
+<div id="page">
+
+
+    <div id="tracks">
+        <?php if (isset($tags['track'])) { ?>
+            <h2>Tracks</h2>
+
+
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">TITLE</th>
+                        <th scope="col">ALBUM</th>
+                        <th scope="col">ADD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($response['tracks']['items'] as $result) { //echo '<pre>'; print_r($result); die; 
+                    ?>
+
+                        <tr>
+                            <th scope="row"><?= $resultCount ?></th>
+                            <td>
+                                <div style="display:flex;">
+                                    <div><img src="<?= $result['album']['images']['2']['url'] ?>" alt="Track Image"></div>&nbsp;
+                                    <h4 style="display:block;"><?= $result['name'] ?></h4>
+                                    <div><?php foreach ($result['album']['artists'] as $artists) { ?>
+                                            <a href="<?= $artists['href'] ?>"><span><?= $artists['name'] ?></span></a>&nbsp;
+                                        <?php } ?>
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td><?= $result['album']['name'] ?></td>
+                            <td><input type="button" class="btn btn-success" name="add" value="Add to Playlist"></td>
+                        </tr>
+                    <?php $resultCount = $resultCount + 1;
+                    } ?>
+                </tbody>
+            </table>
+
+
+        <?php } ?>
+    </div>
+
+    <br>
+
+
+    <div id="albums">
+        <?php if (isset($tags['album'])) { ?>
+            <h2>Albums</h2>
+            <div>
+                <section class="vh-100">
+                    <div class="container py-5 h-100">
+
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <!-- -------------------------------------------card division starts here ------------------------------- -->
+                            <?php foreach ($response['albums']['items'] as $result) { //echo '<pre>'; print_r($result['images']['1']['url']); die
+                            ?>
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+
+
+                                    <div class="card" style="color: #4B515D; border-radius: 35px; border-width: 5px">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex">
+                                                <img src='<?= $result['images']['1']['url'] ?>' width="250" height="250" style="border-radius: 50%" alt="album image">
+                                            </div>
+
+                                            <div class=" flex-column mt-5 mb-4">
+                                                <h4 style="color: #1C2331;"><b> <?= $result['name'] ?> </b></h4>
+                                                <?php
+                                                $year = explode('-', $result['release_date']);
+
+                                                ?>
+                                                <span class="medium" style="color: #868B94"><b> <?= $year[0] ?> </b></span> •
+
+                                                <span> <?php foreach ($result['artists'] as $artists) { ?>
+                                                        <a href="<?= $artists['href'] ?>"><span><?= $artists['name'] ?></span></a>&nbsp;
+                                                    <?php } ?>
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+                            <!-- -------------------------------------------card division ends here ------------------------------- -->
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+
+        <?php } ?>
+    </div>
+
+
+
+    <br>
+
+
+    <div id="artists">
+        <?php if (isset($tags['artist'])) { ?>
+            <h2>Artist</h2>
+            <div>
+                <section class="vh-100">
+                    <div class="container py-5 h-100">
+
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <!-- -------------------------------------------card division starts here ------------------------------- -->
+                            <?php foreach ($response['artists']['items'] as $result) { ?>
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+
+                                    <div class="card" style="color: #4B515D; border-radius: 50; border-width: 5px">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex" style="border-radius: 100%">
+                                                <img src='<?= $result['images']['1']['url'] ?>' width="250" height="250" alt="album image">
+                                            </div>
+
+                                            <div class=" flex-column mt-5 mb-4">
+                                                <h4 style="color: #1C2331;"><b> <?= $result['name'] ?> </b></h4>
+
+                                                <span class="medium" style="color: #868B94"><b> <?= $result['type'] ?> </b></span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+                            <!-- -------------------------------------------card division ends here ------------------------------- -->
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+
+
+        <?php } ?>
+    </div>
+
+
+
+    <br>
+
+
+    <div id="playlists">
+        <?php if (isset($tags['playlist'])) { ?>
+            <h2>Playlists</h2>
+            <div>
+                <section class="vh-100">
+                    <div class="container py-5 h-100">
+
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <!-- -------------------------------------------card division starts here ------------------------------- -->
+                            <?php foreach ($response['playlists']['items'] as $result) { // echo '<pre>'; print_r($result['images']['1']['url']); die
+                            ?>
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+
+                                    <div class="card" style="color: #4B515D; border-radius: 35px; border-width: 5px">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex">
+                                                <img src='<?= $result['images']['0']['url'] ?>' width="250" height="250" alt="album image">
+                                            </div>
+
+                                            <div class=" flex-column mt-5 mb-4">
+                                                <h4 style="color: #1C2331;"><b> <?= $result['name'] ?> </b></h4>
+
+                                                <span class="medium" style="color: #868B94"> By <b> <?= $result['owner']['display_name'] ?> </b></span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+                            <!-- -------------------------------------------card division ends here ------------------------------- -->
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+
+        <?php } ?>
+    </div>
+
+
+
+    <br>
+
+
+    <div id="shows">
+        <?php if (isset($tags['show'])) { ?>
+            <h2>Shows</h2>
+            <div>
+                <section class="vh-100">
+                    <div class="container py-5 h-100">
+
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <!-- -------------------------------------------card division starts here ------------------------------- -->
+                            <?php foreach ($response['shows']['items'] as $result) { // echo '<pre>'; print_r($result); die
+                            ?>
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+
+                                    <div class="card" style="color: #4B515D; border-radius: 35px; border-width: 5px">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex">
+                                                <img src='<?= $result['images']['0']['url'] ?>' width="250" height="250" alt="album image">
+                                            </div>
+
+                                            <div class=" flex-column mt-5 mb-4">
+                                                <h4 style="color: #1C2331;"><b> <?= $result['name'] ?> </b></h4>
+
+                                                <span class="medium" style="color: #868B94"> <b> <?= $result['type'] ?> </b></span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+                            <!-- -------------------------------------------card division ends here ------------------------------- -->
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+
+        <?php } ?>
+    </div>
+
+
+
+    <br>
+
+
+    <div id="episodes">
+        <?php if (isset($tags['episode'])) { ?>
+            <h2>Episodes</h2>
+            <div>
+                <section class="vh-100">
+                    <div class="container py-5 h-100">
+
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <!-- -------------------------------------------card division starts here ------------------------------- -->
+                            <?php foreach ($response['episodes']['items'] as $result) { // echo '<pre>'; print_r($result); die
+                            ?>
+                                <div class="col-md-8 col-lg-6 col-xl-4">
+
+                                    <div class="card" style="color: #4B515D; border-radius: 35px; border-width: 5px">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex">
+                                                <img src='<?= $result['images']['0']['url'] ?>' width="250" height="250" alt="album image">
+                                            </div>
+
+                                            <div class=" flex-column mt-5 mb-4">
+                                                <?php
+                                                    $year = explode('-', $result['release_date']);
+                                                    $min = date("H:i:s.u", $result['duration_ms'] / 1000);
+
+                                                    $time = explode(':', $min);
+
+                                                ?>
+                                                <h4 style="color: #1C2331;"><b> <?= $year['0'].' / '.$year['1'] ?> </b></h4>
+
+                                                <span class="medium" style="color: #868B94"> <b> <?= $time[1] ?> </b> MIN</span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php } ?>
+                            <!-- -------------------------------------------card division ends here ------------------------------- -->
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+
+        <?php } ?>
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<?php
+// echo "<pre>";
+// print_r($response);
+
+
+
+// die;
