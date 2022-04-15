@@ -71,7 +71,7 @@ $container->set(
             'host'     => 'mysql-server',
             'username' => 'root',
             'password' => 'secret',
-            'dbname'   => 'phalcondb1',
+            'dbname'   => 'spotifydb',
             ]
         );
     }

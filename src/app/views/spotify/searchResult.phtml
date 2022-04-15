@@ -5,23 +5,34 @@ $resultCount = 1;
 ?>
 <ul class="nav nav-pills">
 
+    <li class="nav-item">
+        <a class="nav-link btn-primary active" href="#"><b>Logout</b></a>
+    </li>
+    &nbsp;
+
+
+    <li class="nav-item">
+        <a class="nav-link btn-success active" href="#"><b>Playlist</b></a>
+    </li>
+    &nbsp;
+
     <?php if (isset($tags['track'])) { ?>
         <li class="nav-item">
-            <a class="nav-link btn-success active" href="#tracks"><b>Track</b></a>
+            <a class="nav-link btn btn-outline-dark" href="#tracks"><b>Track</b></a>
         </li>
     <?php } ?>
     &nbsp;
 
     <?php if (isset($tags['artist'])) { ?>
         <li class="nav-item">
-            <a class="nav-link btn btn-outline-primary" href="#artists">Artist</a>
+            <a class="nav-link btn btn-outline-dark" href="#artists">Artist</a>
         </li>
     <?php } ?>
     &nbsp;
 
     <?php if (isset($tags['album'])) { ?>
         <li class="nav-item">
-            <a class="nav-link btn btn-outline-info" href="#albums">Album</a>
+            <a class="nav-link btn btn-outline-dark" href="#albums">Album</a>
         </li>
     <?php } ?>
     &nbsp;
@@ -35,14 +46,14 @@ $resultCount = 1;
 
     <?php if (isset($tags['show'])) { ?>
         <li class="nav-item">
-            <a class="nav-link btn btn-outline-info" href="#shows">Show</a>
+            <a class="nav-link btn btn-outline-dark" href="#shows">Show</a>
         </li>
     <?php } ?>
     &nbsp;
 
     <?php if (isset($tags['episode'])) { ?>
         <li class="nav-item">
-            <a class="nav-link btn btn-outline-info" href="#episodes">Episode</a>
+            <a class="nav-link btn btn-outline-dark" href="#episodes">Episode</a>
         </li>
     <?php } ?>
     &nbsp;
@@ -52,7 +63,7 @@ $resultCount = 1;
 <div id="page">
 
 
-    <div id="tracks">
+    <div id="tracks" class="overflow-auto">
         <?php if (isset($tags['track'])) { ?>
             <h2>Tracks</h2>
 
@@ -67,7 +78,7 @@ $resultCount = 1;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($response['tracks']['items'] as $result) { //echo '<pre>'; print_r($result); die; 
+                    <?php foreach ($response['tracks']['items'] as $result) { // echo '<pre>'; print_r($result['id']); die; 
                     ?>
 
                         <tr>
@@ -84,7 +95,7 @@ $resultCount = 1;
                                 </div>
                             </td>
                             <td><?= $result['album']['name'] ?></td>
-                            <td><input type="button" class="btn btn-success" name="add" value="Add to Playlist"></td>
+                            <td><a href="playlist?id=<?= $result['id'] ?>"><input type="button" class="btn btn-success" name="add" onclick="" value="Add to Playlist"></a> </td>
                         </tr>
                     <?php $resultCount = $resultCount + 1;
                     } ?>
@@ -98,16 +109,16 @@ $resultCount = 1;
     <br>
 
 
-    <div id="albums">
-        <?php if (isset($tags['album'])) { ?>
-            <h2>Albums</h2>
+    <?php if (isset($tags['album'])) { ?>
+        <h2>Albums</h2>
+    <div id="albums" class="overflow-auto">
             <div>
                 <section class="vh-100">
                     <div class="container py-5 h-100">
 
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <!-- -------------------------------------------card division starts here ------------------------------- -->
-                            <?php foreach ($response['albums']['items'] as $result) { //echo '<pre>'; print_r($result['images']['1']['url']); die
+                            <?php foreach ($response['albums']['items'] as $result) { 
                             ?>
                                 <div class="col-md-8 col-lg-6 col-xl-4">
 
@@ -149,17 +160,17 @@ $resultCount = 1;
             </div>
 
 
-        <?php } ?>
     </div>
+    <?php } ?>
 
 
 
     <br>
 
 
-    <div id="artists">
-        <?php if (isset($tags['artist'])) { ?>
-            <h2>Artist</h2>
+    <?php if (isset($tags['artist'])) { ?>
+        <h2>Artist</h2>
+    <div id="artists" class="overflow-auto">
             <div>
                 <section class="vh-100">
                     <div class="container py-5 h-100">
@@ -198,24 +209,24 @@ $resultCount = 1;
 
 
 
+        </div>
         <?php } ?>
-    </div>
 
 
 
     <br>
 
 
-    <div id="playlists">
-        <?php if (isset($tags['playlist'])) { ?>
-            <h2>Playlists</h2>
+    <?php if (isset($tags['playlist'])) { ?>
+        <h2>Playlists</h2>
+    <div id="playlists" class="overflow-auto">
             <div>
                 <section class="vh-100">
                     <div class="container py-5 h-100">
 
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <!-- -------------------------------------------card division starts here ------------------------------- -->
-                            <?php foreach ($response['playlists']['items'] as $result) { // echo '<pre>'; print_r($result['images']['1']['url']); die
+                            <?php foreach ($response['playlists']['items'] as $result) { 
                             ?>
                                 <div class="col-md-8 col-lg-6 col-xl-4">
 
@@ -249,24 +260,24 @@ $resultCount = 1;
             </div>
 
 
-        <?php } ?>
     </div>
+    <?php } ?>
 
 
 
     <br>
 
 
-    <div id="shows">
-        <?php if (isset($tags['show'])) { ?>
-            <h2>Shows</h2>
+    <?php if (isset($tags['show'])) { ?>
+        <h2>Shows</h2>
+    <div id="shows" class="overflow-auto">
             <div>
                 <section class="vh-100">
                     <div class="container py-5 h-100">
 
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <!-- -------------------------------------------card division starts here ------------------------------- -->
-                            <?php foreach ($response['shows']['items'] as $result) { // echo '<pre>'; print_r($result); die
+                            <?php foreach ($response['shows']['items'] as $result) {
                             ?>
                                 <div class="col-md-8 col-lg-6 col-xl-4">
 
@@ -300,24 +311,24 @@ $resultCount = 1;
             </div>
 
 
-        <?php } ?>
     </div>
+    <?php } ?>
 
 
 
     <br>
 
 
-    <div id="episodes">
-        <?php if (isset($tags['episode'])) { ?>
-            <h2>Episodes</h2>
+    <?php if (isset($tags['episode'])) { ?>
+        <h2>Episodes</h2>
+    <div id="episodes" class="overflow-auto">
             <div>
                 <section class="vh-100">
                     <div class="container py-5 h-100">
 
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <!-- -------------------------------------------card division starts here ------------------------------- -->
-                            <?php foreach ($response['episodes']['items'] as $result) { // echo '<pre>'; print_r($result); die
+                            <?php foreach ($response['episodes']['items'] as $result) {
                             ?>
                                 <div class="col-md-8 col-lg-6 col-xl-4">
 
@@ -358,8 +369,8 @@ $resultCount = 1;
             </div>
 
 
-        <?php } ?>
     </div>
+    <?php } ?>
 
 
 
@@ -369,14 +380,3 @@ $resultCount = 1;
 
 </div>
 
-
-
-
-
-<?php
-// echo "<pre>";
-// print_r($response);
-
-
-
-// die;
